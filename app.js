@@ -10,6 +10,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const employees = [];
+
 function addMember() {
     inquirer.prompt(
         [
@@ -48,20 +50,21 @@ function addMember() {
                 console.log(roleInfo);
             }
 
-            // inquirer.prompt([
-            //     {
-            //         type: 'input',
-            //         name: 'roleInfo',
-            //         message: `What is your team member's ${roleInfo}?`,
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'roleInfo',
+                    message: `What is your team member's ${roleInfo}?`,
 
-            //     },
-            //     {
-            //         type: 'list',
-            //         name: 'moreMembers',
-            //         message: 'Would you like to add another member?',
-            //         choices: ['Yes', 'No'],
-            //     }
-            // ]).then((newMember) => {
+                },
+                {
+                    type: 'list',
+                    name: 'moreMembers',
+                    message: 'Would you like to add another member?',
+                    choices: ['Yes', 'No'],
+                }
+            ])
+            // .then((newMember) => {
             //     const name = data.name;
             //     const id = data.id;
             //     const email = data.email;
