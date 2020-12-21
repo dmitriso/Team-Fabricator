@@ -10,6 +10,80 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+function addMember() {
+    inquirer.prompt(
+        [
+            {
+                type: 'input',
+                name: 'name',
+                message: "What is your team member's name?",
+            },
+            {
+                type: 'list',
+                name: 'role',
+                message: "What is the role of your team member?",
+                choices: ['Manager', 'Engineer', 'Intern']
+            },
+            {
+                type: 'input',
+                name: 'id',
+                message: "What is your team member's id?",
+            },
+            {
+                type: 'input',
+                name: 'email',
+                message: "What is your team member's email address?",
+            },
+        ]).then((data) => {
+            console.log(data);
+            let roleInfo = '';
+            if (data.role === 'Engineer') {
+                roleInfo = 'GitHub username';
+                console.log(roleInfo);
+            } else if (data.role === 'Manager') {
+                roleInfo = 'office number';
+                console.log(roleInfo);
+            } else {
+                roleInfo = 'school name';
+                console.log(roleInfo);
+            }
+
+            // inquirer.prompt([
+            //     {
+            //         type: 'input',
+            //         name: 'roleInfo',
+            //         message: `What is your team member's ${roleInfo}?`,
+
+            //     },
+            //     {
+            //         type: 'list',
+            //         name: 'moreMembers',
+            //         message: 'Would you like to add another member?',
+            //         choices: ['Yes', 'No'],
+            //     }
+            // ]).then((newMember) => {
+            //     const name = data.name;
+            //     const id = data.id;
+            //     const email = data.email;
+            //     const roleInfo = newMember.roleInfo;
+            //     if (data.role === 'Engineer') {
+            //         newMember = new Engineer(name, id, email, roleInfo);
+            //         console.log(newMember);
+            //     } else if (data.role === 'Manager') {
+            //         newMember = new Manager(name, id, email, roleInfo);
+            //         console.log(newMember);
+            //     } else {
+            //         newMember = new Intern(name, id, email, roleInfo);
+            //         console.log(newMember);
+            //     }
+            // })
+        })
+
+}
+
+addMember();
+
+
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
