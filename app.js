@@ -64,22 +64,22 @@ function addMember() {
                     choices: ['Yes', 'No'],
                 }
             ])
-            // .then((newMember) => {
-            //     const name = data.name;
-            //     const id = data.id;
-            //     const email = data.email;
-            //     const roleInfo = newMember.roleInfo;
-            //     if (data.role === 'Engineer') {
-            //         newMember = new Engineer(name, id, email, roleInfo);
-            //         console.log(newMember);
-            //     } else if (data.role === 'Manager') {
-            //         newMember = new Manager(name, id, email, roleInfo);
-            //         console.log(newMember);
-            //     } else {
-            //         newMember = new Intern(name, id, email, roleInfo);
-            //         console.log(newMember);
-            //     }
-            // })
+            .then((newMember) => {
+                const name = data.name;
+                const id = data.id;
+                const email = data.email;
+                const roleInfo = newMember.roleInfo;
+                if (data.role === 'Engineer') {
+                    newMember = new Engineer(name, id, email, roleInfo);
+                    console.log(newMember);
+                } else if (data.role === 'Manager') {
+                    newMember = new Manager(name, id, email, roleInfo);
+                    console.log(newMember);
+                } else {
+                    newMember = new Intern(name, id, email, roleInfo);
+                    console.log(newMember);
+                }
+            })
         })
 
 }
