@@ -43,7 +43,6 @@ function addMember() {
         ])
         // Promise that assigns the role and asks for the employees information 
         .then((data) => {
-            console.log(data);
             let roleInfo = '';
             if (data.role === 'Engineer') {
                 roleInfo = 'GitHub username';
@@ -91,7 +90,6 @@ function addMember() {
                     } else {
                         writeToFile(outputPath,render(employees));
                     }
-
                 })
         })
 }
