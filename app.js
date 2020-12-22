@@ -10,9 +10,13 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-const employees = [];
 
+init();
+
+const employees = [];
+// This function prompts user questions to create a new employee to add to the team
 function addMember() {
+    // Base employee questions (name,id,email) and the role of your member
     inquirer.prompt(
         [
             {
@@ -36,26 +40,24 @@ function addMember() {
                 name: 'email',
                 message: "What is your team member's email address?",
             },
-        ]).then((data) => {
+        ])
+        // Promise that assigns the role and asks for the employees information 
+        .then((data) => {
             console.log(data);
             let roleInfo = '';
             if (data.role === 'Engineer') {
                 roleInfo = 'GitHub username';
-                console.log(roleInfo);
             } else if (data.role === 'Manager') {
                 roleInfo = 'office number';
-                console.log(roleInfo);
             } else {
                 roleInfo = 'school name';
-                console.log(roleInfo);
             }
-
+            // Second prompt asking for role information and if the user wants to add another member
             inquirer.prompt([
                 {
                     type: 'input',
                     name: 'roleInfo',
                     message: `What is your team member's ${roleInfo}?`,
-
                 },
                 {
                     type: 'list',
@@ -64,49 +66,43 @@ function addMember() {
                     choices: ['Yes', 'No'],
                 }
             ])
-            .then((newMember) => {
-                const name = data.name;
-                const id = data.id;
-                const email = data.email;
-                const roleInfo = newMember.roleInfo;
-                if (data.role === 'Engineer') {
-                    newMember = new Engineer(name, id, email, roleInfo);
-                    console.log(newMember);
-                } else if (data.role === 'Manager') {
-                    newMember = new Manager(name, id, email, roleInfo);
-                    console.log(newMember);
-                } else {
-                    newMember = new Intern(name, id, email, roleInfo);
-                    console.log(newMember);
-                }
-            })
-        })
+                // This creates a new member of the assigned role with all the input information.
+                .then((newMember) => {
+                    const name = data.name;
+                    const role = data.role;
+                    const id = data.id;
+                    const email = data.email;
+                    const roleInfo = newMember.roleInfo;
+                    const moreMembers = newMember.moreMembers;
+                    // This creates a new class of the assigned role
+                    if (data.role === 'Engineer') {
+                        newMember = new Engineer(name,role,id,email,roleInfo);
+                    } else if (data.role === 'Manager') {
+                        newMember = new Manager(name,role,id,email,roleInfo);
+                    } else {
+                        newMember = new Intern(name,role,id,email,roleInfo);
+                    }
 
+                    employees.push(newMember);
+                    console.log(employees);
+
+                    if (moreMembers === 'Yes') {
+                        addMember();
+                    } else {
+                        writeToFile(outputPath,render(employees));
+                    }
+
+                })
+        })
+}
+// This function writes a file to the out put folder
+function writeToFile(outputPath, employees) {
+    fs.writeFile(outputPath, employees, (err)=> {
+        err ? console.error(err) : console.log('Success!')
+    });
+}
+// This function initializes the program
+function init() {
+    addMember();
 }
 
-addMember();
-
-
-
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
