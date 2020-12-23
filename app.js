@@ -75,11 +75,11 @@ function addMember() {
                     const moreMembers = newMember.moreMembers;
                     // This creates a new class of the assigned role
                     if (data.role === 'Engineer') {
-                        newMember = new Engineer(name,role,id,email,roleInfo);
+                        newMember = new Engineer(name,id,email,roleInfo,role);
                     } else if (data.role === 'Manager') {
-                        newMember = new Manager(name,role,id,email,roleInfo);
+                        newMember = new Manager(name,id,email,roleInfo,role);
                     } else {
-                        newMember = new Intern(name,role,id,email,roleInfo);
+                        newMember = new Intern(name,id,email,roleInfo,role);
                     }
 
                     employees.push(newMember);
