@@ -83,7 +83,7 @@ function addMember() {
                     }
 
                     employees.push(newMember);
-                    console.log(employees);
+                    
 
                     if (moreMembers === 'Yes') {
                         addMember();
